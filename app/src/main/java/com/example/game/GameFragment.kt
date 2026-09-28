@@ -6,8 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import com.example.game.databinding.FragmentGameBinding
 
 class GameFragment : Fragment() {
+
+    var _binding : FragmentGameBinding? = null
+    val binding get() = _binding!!
 
     companion object {
         fun newInstance() = GameFragment()
@@ -25,6 +30,17 @@ class GameFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_game, container, false)
+        _binding = FragmentGameBinding.inflate(inflater, container, false)
+        val view = binding.root
+
+        viewModel.displayWord.observe( viewLifecycleOwner,Observer<String>{
+            binding.displayWord.text = it
+        })
+
+        viewModel.tryCount.observe(viewLifecycleOwner, Observer{
+            binding.textCount.text = "Кол-во попыток: $it"
+        })
+
+        return view
     }
 }
