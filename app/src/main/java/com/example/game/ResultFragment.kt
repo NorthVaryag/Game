@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.example.game.databinding.FragmentResultBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,6 +19,10 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class ResultFragment : Fragment() {
+
+    var _binding : FragmentResultBinding? = null
+    val binding get() = _binding!!
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -33,8 +39,17 @@ class ResultFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        _binding = FragmentResultBinding.inflate(inflater, container, false)
+        val view = binding.root
+        val message = ResultFragmentArgs.fromBundle(requireArguments()).message
+        if (message != null)
+            binding.textResult.text = message
+        binding.buttonAgain.setOnClickListener {
+            val action = ResultFragmentDirections.actionResultFragmentToGameFragment()
+            findNavController().navigate(action)
+        }
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_result, container, false)
+        return view
     }
 
     companion object {
@@ -55,5 +70,6 @@ class ResultFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+
     }
 }

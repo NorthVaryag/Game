@@ -1,5 +1,6 @@
 package com.example.game
 
+import android.text.Editable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -29,6 +30,29 @@ class GameViewModel : ViewModel() {
                 result += "_"
         }
         return result
+    }
+
+    fun userGuess(userString: String) {
+        if (userString.length != 1)
+            return
+        val char = userString[0].uppercase()
+        if (secret.contains(char))
+        {
+            userInput += char
+            displayWord.value = viewDisplayWord()
+        }
+        else
+        {
+            tryCount.value = tryCount.value?.minus(1)
+        }
+    }
+
+    fun isWin() : Boolean{
+        return displayWord.value == secret
+    }
+
+    fun isLost() : Boolean{
+        return tryCount.value!! <= 0
     }
 
     init {
