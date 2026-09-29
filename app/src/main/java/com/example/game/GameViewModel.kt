@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 
 class GameViewModel : ViewModel() {
 
-    val array = listOf<String>("123", "456", "789")
+    val array = listOf<String>("123", "456", "789", "kurwashit", "glushnyshit", "люблюпельмениипиццу")
     var secret: String = ""
     val displayWord = MutableLiveData("")
     val tryCount = MutableLiveData(0)
